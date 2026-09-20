@@ -343,7 +343,6 @@
                     <td>PF - Other Charges (1%)</td>
                     <td id="oldOther">₹140</td>
                     <td id="newOther">₹140</td>
-                
                 </tr>
 
                 <tr class="grand-total">
@@ -360,16 +359,16 @@
 
             <div class="metric">
                 <small>PF as per Old Ceiling</small>
-                <strong id="oldRemittance">₹1,820</strong>
+                <strong id="summaryOld">₹3,500</strong>
             </div>
 
             <div class="metric">
                 <small>PF as per New Ceiling</small>
-                <strong id="summaryNew">₹1,820</strong>
+                <strong id="summaryNew">₹3,500</strong>
             </div>
 
             <div class="metric">
-                <small>Difference</small>
+                <small>Difference*</small>
                 <strong id="summaryDifference">₹0</strong>
             </div>
 
@@ -386,6 +385,7 @@
             <br><br>
             New Ceiling: Employer PF = 12% of Basic, subject to ₹3,000 maximum.
             Employee PF = Employer PF. Other Charges = 1% of Basic, subject to ₹250 maximum.
+
         </div>
 
     </div>
@@ -424,7 +424,6 @@ function calculatePF() {
         150
     );
 
-    let oldTotal = oldEmployer + oldOther;
 
     let oldRemittance =
         oldEmployee +
@@ -449,7 +448,6 @@ function calculatePF() {
         250
     );
 
-    let newTotal = newEmployer + newOther;
 
     let newRemittance =
         newEmployee +
@@ -490,31 +488,24 @@ function calculatePF() {
 
     document.getElementById("newOther").innerText =
         formatCurrency(newOther);
-
-    document.getElementById("oldTotal").innerText =
-        formatCurrency(oldTotal);
-
-    document.getElementById("newTotal").innerText =
-        formatCurrency(newTotal);
-
-    document.getElementById("oldRemittance").innerText =
+document.getElementById("oldRemittance").innerText =
         formatCurrency(oldRemittance);
 
     document.getElementById("newRemittance").innerText =
         formatCurrency(newRemittance);
 
     document.getElementById("summaryOld").innerText =
-        formatCurrency(oldTotal);
+        formatCurrency(oldRemittance);
 
     document.getElementById("summaryNew").innerText =
-        formatCurrency(newTotal);
+        formatCurrency(newRemittance);
 
     document.getElementById("summaryDifference").innerText =
-        formatCurrency(newTotal - oldTotal);
+        formatCurrency(newRemittance - oldRemittance);
 
     document.getElementById("status").innerText =
-        "Calculation completed successfully.";
-
+        "*Take-home pay will decrease due to the increase in PF deduction under the new PF ceiling.";
+   
     // Save for CSV export
     window.pfData = {
         basic,
@@ -522,13 +513,11 @@ function calculatePF() {
         oldEmployer,
         oldEmployee,
         oldOther,
-        oldTotal,
         oldRemittance,
         newPFWage,
         newEmployer,
         newEmployee,
         newOther,
-        newTotal,
         newRemittance
     };
 }
